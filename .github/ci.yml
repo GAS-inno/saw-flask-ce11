@@ -1,0 +1,43 @@
+name: CI Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js (or Python/Ruby/etc.)
+        uses: actions/setup-node@v2  # Change as necessary
+        with:
+          node-version: '14'  # Example for Node.js
+
+      - name: Install dependencies
+        run: npm install  # Change to pip install or bundle install as necessary
+
+      - name: Run tests
+        run: npm test  # Change as necessary
+
+      - name: Build the application
+        run: npm run build  # Change as necessary
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Production
+        run: |
+          echo "Deploying to production..."  # Replace with actual deploy command
